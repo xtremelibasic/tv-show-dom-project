@@ -1,3 +1,48 @@
-#root {
-  color: red;
+/*General Styles*/
+*{
+  font-family:comic sans ms;
+}
+body{
+  background-color:#cfcfcf;
+}
+h2{
+  font-size:2rem;
+  text-align:center;
+}
+
+p{
+  font-size:1.5rem;
+}
+
+/*Styles for root div*/
+.episodes{
+  width:97.7vw;
+  height:auto;
+  display:flex;
+
+  flex-wrap:wrap;
+  
+  justify-content:center;
+}
+
+.episode{
+  width:500px;
+  height:800px;
+  background-color:#ffffff;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  padding:3rem 5rem;
+  margin:3rem;
+}
+.episode h2{
+  background-color:#00ff99;
+  width:100%;
+  padding:2rem 0;
+  border-radius:50px;
+}
+.episode img{
+  width:400px;
+  height:auto;
 }
