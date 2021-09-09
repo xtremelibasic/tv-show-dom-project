@@ -26,15 +26,15 @@ p{
 }
 
 .episode{
-  width:500px;
-  height:800px;
+  width:300px;
+  height:600px;
   background-color:#ffffff;
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
   align-items:center;
-  padding:3rem 5rem;
-  margin:3rem;
+  padding:2rem 4rem;
+  margin:2rem;
 }
 .episode h2{
   background-color:#00ff99;
