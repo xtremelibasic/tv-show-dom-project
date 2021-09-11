@@ -1,11 +1,14 @@
 //You can edit ALL of the code here
+ const allEpisodes = getAllEpisodes();
+
+
 function setup() {
-  const allEpisodes = getAllEpisodes();
-  makePageForEpisodes(allEpisodes);
+   makePageForEpisodes(allEpisodes);
 }
 
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
+  rootElem.innerHTML = "";
   rootElem.className = "episodes";
 
   episodeList.forEach(episode => {
@@ -49,6 +52,30 @@ function makePageForEpisodes(episodeList) {
   const disclaimer = document.createElement("h4");
   disclaimer.innerHTML = "All data in this page was originally gotten from <a href='https://www.tvmaze.com/1'>TVMaze.com</a>"
   rootElem.append(disclaimer);
+  
 }
 
-window.onload = setup;
+
+
+ 
+let searchValue = "";
+function search(episodeList){
+  let searchResult = [];
+  let regex = new RegExp(searchValue, 'i')
+  episodeList.forEach( episode =>  {
+    let episodeName = episode.name;
+    if (regex.test(episodeName)){
+       searchResult.push(episode) 
+    }
+  })
+  makePageForEpisodes(searchResult);
+  
+}
+
+window.onload = setup()
+
+document.getElementById("search").addEventListener("input", function(){
+  searchValue = document.getElementById("search").value;
+  search(allEpisodes)
+})
+

@@ -39,10 +39,10 @@ p{
 .episode h2{
   background-color:#00ff99;
   width:100%;
-  padding:2rem .5rem;
+  padding:2rem 0;
   border-radius:50px;
 }
 .episode img{
-  width:300px;
+  width:400px;
   height:auto;
 }
