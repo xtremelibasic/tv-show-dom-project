@@ -9,14 +9,18 @@ function setup() {
 function makePageForEpisodes(episodeList) {
   const rootElem = document.getElementById("root");
   rootElem.innerHTML = "";
-  rootElem.className = "episodes";
+  rootElem.className = "episodesContainer";
+
+  //episodes Container
+    const episodesContainer= document.createElement("div");
+    episodesContainer.className = "episodes";
+    rootElem.append(episodesContainer);
 
   episodeList.forEach(episode => {
-    
-    //DIV
+    //episodes
     const episodeDiv = document.createElement("div");
     episodeDiv.className = "episode";
-    rootElem.append(episodeDiv);
+    episodesContainer.append(episodeDiv);
 
     //Episode Title
     const title = document.createElement("h2");
@@ -57,19 +61,27 @@ function makePageForEpisodes(episodeList) {
 
 
 
- 
-let searchValue = "";
+
+
 function search(episodeList){
   let searchResult = [];
-  let regex = new RegExp(searchValue, 'i')
+   let matchCounter = 0;
+  let regex = new RegExp(searchValue, 'i');
   episodeList.forEach( episode =>  {
     let episodeName = episode.name;
     if (regex.test(episodeName)){
-       searchResult.push(episode) 
+      matchCounter++;
+      searchResult.push(episode) 
     }
   })
+
   makePageForEpisodes(searchResult);
-  
+  if(matchCounter !== 73){
+    const rootElem = document.getElementById("root");
+    let matchValue = document.createElement("h1");
+    matchValue.innerText = matchCounter + " matches found";
+    rootElem.prepend(matchValue)
+  }
 }
 
 window.onload = setup()
