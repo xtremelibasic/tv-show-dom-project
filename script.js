@@ -3,28 +3,16 @@
 
 
 function setup() {
+  makeEpisodeDropDown(allEpisodes);
    makePageForEpisodes(allEpisodes);
 }
 
-function makePageForEpisodes(episodeList) {
-  const rootElem = document.getElementById("root");
-  rootElem.innerHTML = "";
-  rootElem.className = "episodesContainer";
-
-  //episodes Container
-    const episodesContainer= document.createElement("div");
-    episodesContainer.className = "episodes";
-    rootElem.append(episodesContainer);
-
+//This function determines the format of the season and episode nunmber
+function createSeasonDisplayFormat(episodeList){
+  let arrayOfEpisodes = [];
+  let episodeDisplayFormat = "";
   episodeList.forEach(episode => {
-    //episodes
-    const episodeDiv = document.createElement("div");
-    episodeDiv.className = "episode";
-    episodesContainer.append(episodeDiv);
-
-    //Episode Title
-    const title = document.createElement("h2");
-    let seasonNumber = String(episode.season);
+   let seasonNumber = String(episode.season);
     let episodeNumber = String(episode.number);
     if(seasonNumber.length > 1){
       seasonNumber = seasonNumber;
@@ -36,7 +24,37 @@ function makePageForEpisodes(episodeList) {
     } else {
       episodeNumber = "0" + episodeNumber;
     }
-    title.innerText = `${episode.name} S${seasonNumber}E${episodeNumber}`;
+    episodeDisplayFormat = `S${seasonNumber}E${episodeNumber}`;
+    arrayOfEpisodes.push(episodeDisplayFormat)
+  })
+   return arrayOfEpisodes;
+}
+
+//This function makes a div for each movie
+function makePageForEpisodes(episodeList) {
+  const rootElem = document.getElementById("root");
+  rootElem.innerHTML = "";
+  rootElem.className = "episodesContainer";
+
+  //episodes Container
+    const episodesContainer= document.createElement("div");
+    episodesContainer.className = "episodes";
+    rootElem.append(episodesContainer);
+
+  episodeList.forEach((episode, episodeIndex) => {
+    //episodes
+    const episodeDiv = document.createElement("div");
+    episodeDiv.className = "episode";
+    episodesContainer.append(episodeDiv);
+
+    //Episode Title
+    const title = document.createElement("h2");
+    let episodeDisplayFormatArray = createSeasonDisplayFormat(allEpisodes);
+    episodeDisplayFormatArray.forEach((format, formatIndex) => {
+      if(formatIndex === episodeIndex){
+        title.innerText = `${episode.name} ${format}`;
+      }
+    })
     episodeDiv.append(title)
     
     //Thumbnail
@@ -69,7 +87,8 @@ function search(episodeList){
   let regex = new RegExp(searchValue, 'i');
   episodeList.forEach( episode =>  {
     let episodeName = episode.name;
-    if (regex.test(episodeName)){
+    let episodeSummary = episode.summary;
+    if (regex.test(episodeName) || regex.test(episodeSummary)){
       matchCounter++;
       searchResult.push(episode) 
     }
@@ -84,6 +103,7 @@ function search(episodeList){
   }
 }
 
+
 window.onload = setup()
 
 document.getElementById("search").addEventListener("input", function(){
@@ -91,3 +111,34 @@ document.getElementById("search").addEventListener("input", function(){
   search(allEpisodes)
 })
 
+//This function creates each dropdown option element
+function makeEpisodeDropDown(episodeList){
+  const dropDown = document.getElementById("dropDown");
+  episodeList.forEach((episode, episodeIndex) => {
+    let episodeOption = document.createElement("option");
+    let episodeDisplayFormatArray = createSeasonDisplayFormat(allEpisodes);
+  
+    episodeDisplayFormatArray.forEach((format, formatIndex) => {
+      if(formatIndex === episodeIndex){
+        episodeOption.innerText = `${format} - ${episode.name}`;
+      }
+    })
+    dropDown.append(episodeOption);
+  })
+  
+}
+
+let dropDown = document.getElementById("dropDown");
+let showAllBtn = document.getElementById("showAllBtn")
+
+//This event listener listens for if an option has been chosen
+dropDown.addEventListener("change", function(e){
+  searchValue = this.value.slice(9);
+  search(allEpisodes)
+})
+
+//This button shows all the movies
+showAllBtn.addEventListener("click", function(){
+  searchValue = "";
+  search(allEpisodes)
+})
