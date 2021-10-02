@@ -171,7 +171,20 @@ allShows.forEach(show => {
         })
 
       })
-      .catch((error) => console.warn(error))
+      .catch((error) => {
+        let errorMessage = document.createElement("h1");
+        errorMessage.classList.add("errorMessage");
+        errorMessage.innerHTML = "An error has occurred<br>" + error;
+        rootElem.innerHTML = "";
+        let errorImage = document.createElement("img");
+        errorImage.classList.add("errorImage");
+        errorImage.src = "resources\report_problem_black_24dp.svg";
+        errorImage.alt = "An error has ocurred";
+        rootElem.append(errorImage);
+        rootElem.append(errorMessage);
+        rootElem.classList.add("errorMessagePosition")
+        console.log(errorMessage.innerHTML)
+      })
     }
   })
     })
@@ -179,19 +192,32 @@ allShows.forEach(show => {
 
 //Homepage setup
 function createHomepageSetup(showsArray){
+  let showsContainer = document.createElement("div");
+  showsContainer.classList.add("showsContainer");
 showsArray.forEach(show => {
   if(show.image !== null){
     let showDiv = document.createElement("div");
+    showDiv.classList.add("showDiv");
     let thumbnail = document.createElement("img");
     thumbnail.src = show.image.original;
     showDiv.append(thumbnail);
     let title = document.createElement("h1");
+    title.classList.add("title");
     title.innerText = show.name;
     showDiv.append(title);
     let detailsDiv = document.createElement("div");
+    detailsDiv.classList.add("otherDetails");
     showDiv.append(detailsDiv);
-    let genres = document.createElement("p");
-    genres.innerText = show.genres.join(", ");
+    let genres = document.createElement("div");
+    genres.classList.add("genresContainer");
+    show.genres.forEach( genre => {
+      let genreDiv = document.createElement("div");
+      genreDiv.classList.add("genreDiv")
+      let genreText = document.createElement("p");
+      genreText.innerText = genre;
+      genreDiv.append(genreText);
+      genres.append(genreDiv);
+    });
     detailsDiv.append(genres);
     let duration = document.createElement("p");
     duration.innerText = show.runtime + " minutes";
@@ -202,7 +228,7 @@ showsArray.forEach(show => {
     let showSummary = document.createElement("p");
     showSummary.innerHTML = show.summary;
     showDiv.append(showSummary);
-    rootElem.append(showDiv);
+    showsContainer.append(showDiv);
 
     title.addEventListener("click", function(){
       dropDown.style.display = "inline-block";
@@ -366,6 +392,7 @@ showsArray.forEach(show => {
     })
   }
 })
+rootElem.append(showsContainer)
 }
 
 createHomepageSetup(allShows);
@@ -396,8 +423,8 @@ createHomepageSetup(allShows);
 
         searchInput.addEventListener("input", function(){
           rootElem.innerHTML = "";
-          searchValue = document.getElementById("search").value;
-          search(allShows)
+          searchValue = searchInput.value;
+            search(allShows);
         })
 
 
