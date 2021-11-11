@@ -3,17 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TV Show Project | My Name (My GitHub username)</title>
+    <title>TV Show Project | Amanda Obiajulu Nwadukwe (xtremelibasic)</title>
     <link href="style.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <script src="https://kit.fontawesome.com/9bb64d8c48.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
+    <header>
+      <input type="search" id="search" class="search" placeholder="Search">
+      <select id="chooseShowDropDown"></select>
+
+      <select id="dropDown" class="dropDown">Episodes</select>
+
+      <button type="button" id="showAllEpisodesBtn" class="showAllEpisodesBtn btn">Show All Episodes</button>
+      <button type="button" id="showAllShowsBtn" class="showAllShowsBtn btn">Show All Shows</button>
+    </header>
     <div id="root">
     </div>
 
-    <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
-    <script src="episodes.js"></script>
+    <!-- Loads a provided function called getAllShows() which returns all episodes -->
+    <script src="shows.js"></script>
 
     <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
